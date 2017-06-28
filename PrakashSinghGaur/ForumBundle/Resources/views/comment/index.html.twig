@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+	<div class="col-lg-12">		
+		<ol class="breadcrumb breadcrumb-custom"><b>You are here:</b>
+		  <li>Home</li>
+		  <li>Discussion Forum</li>
+		  <li>Forum Topic</li>
+		</ol>
+		
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-4"><h3><b>Forum Topic <i class="fa fa-comments"></i> </b></h3></div>
+	<div class="col-lg-4">
+		<div>
+		
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<ul style="list-style-type:none;" class="pull-right">
+			<li style="display:inline" ><a href="/forum/topic/{{forum.id}}" class="btn btn-default"><i class="fa fa-backward" aria-hidden="true"></i> Forum Topics </a>
+			</li>
+			
+		<ul>
+	</div>
+
+</div>
+<div class="row">
+	<div class="col-lg-2"></div>
+	<div class="col-lg-8">
+		<h3>Forum: {{forum.title}}</h3>
+		<div class="panel panel-primary">
+		 	<div class="panel-heading"><h4>Topic: {{topic.title}}</h4></div>
+			 	<div class="panel-body">
+			 		<p>Descirption: {{topic.description | raw}}</p>
+					<p><i> created on: {{topic.createdOn | date('d-m-Y H:i:s')}}</i></p>
+					
+					<p class="text-primary">Comments: {{topic.comments | length}}  </p>
+						{% for comment in comments %}
+							<p class="pull-left">#: {{loop.index}}</p>
+							<div class="panel panel-info"  style="margin-left:40px;">
+								<div class="panel panel-body" >
+									
+									<p>{{comment.description | raw }}</p>
+									<p class="pull-right">posted on: {{comment.createdOn | date('d-m-Y H:i:s')}}</i><br/>
+										{# {% if app.user == comment.createdBy %} #}
+											<a href="/forum/topic/comment/edit/{{comment.id}}">Edit comment<i class="fa fa-pencil"></i></a>
+										{# {% endif %} #}
+									</p>
+								</div>
+							</div>
+						{% endfor %}
+
+						{{form_start(form, {'attr':{'novalidate':'novalidate'}})}}
+						{{form_widget(form)}}
+						{{form_end(form)}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-2"></div>
+</div>
+
+{% endblock %}

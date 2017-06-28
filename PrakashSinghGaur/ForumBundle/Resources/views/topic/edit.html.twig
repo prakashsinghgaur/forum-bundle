@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+	<div class="col-lg-12">		
+		<ol class="breadcrumb breadcrumb-custom"><b>You are here:</b>
+		  <li>Home</li>
+		  <li>Discussion Forum</li>
+		  <li class="active">Forumm topic</li>
+		</ol>
+		
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-4"></div>
+	<div class="col-lg-4">
+		<div>
+		
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<ul style="list-style-type:none;" class="pull-right">
+			<li style="display:inline" ><a href="/forum/topic/{{forum.id}}" class="btn btn-default"><i class="fa fa-backward" aria-hidden="true"></i> Forum topic </a>
+			</li>
+			
+		<ul>
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="col-lg-3"></div>
+	<div class="col-lg-6">
+		<h3>Forum: {{forum.title}}</h3>
+		<h3><b>Edit topic </b></h3>
+		{{form_start(form, {'attr':{'novalidate':'novalidate'}})}}
+		{{form_widget(form)}}
+		{{form_end(form)}}
+
+
+	</div>
+	<div class="col-lg-3"></div>
+</div>
+{% endblock %}

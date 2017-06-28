@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+	<div class="col-lg-12">		
+		<ol class="breadcrumb breadcrumb-custom"><b>You are here:</b>
+		  <li>Home</li>
+		  <li>Discussion Forum</li>
+		  <li class="active">Forum Topics</li>
+		</ol>
+		
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-4"></div>
+	<div class="col-lg-4">
+		<div>
+		
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<ul style="list-style-type:none;" class="pull-right">
+
+			<li style="display:inline" ><a href="/forum" class="btn btn-default"><i class="fa fa-backward" aria-hidden="true"></i> Discussion Forum(s) </a>
+			</li>
+			
+		<ul>
+	</div>
+
+</div>
+<div class="row">
+	<div class="col-lg-1"></div>
+	<div class="col-lg-10">
+		<h3>Forum: {{forum.title}}</h3>
+		<h4 class="pull-left">Forum Topics <i class="fa fa-comments"></i></h4>
+		<p><a href="/forum/topic/add/{{forum.id}}" class="btn btn-success pull-right"> <i class="fa fa-plus-circle"></i> Add New Topic</a></p>
+		<table class="table table-bordered table-stripped table-hovered">
+			<thead>
+				<tr class="bg-primary">
+					<th>#</th>
+					<th class="col-sm-4">Forum topic(s)</th>
+					<th class="col-sm-2">Comments <i class="fa fa-comment"></i></th>
+					<th class="col-sm-3">Last comment</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for topic in topics %}
+					<tr>
+						<td>{{loop.index}}</td>
+						<td><a href="/forum/topic/comment/{{topic.id}}"> {{topic.title}}</a></td>
+						<td>
+							created on: {{topic.createdOn | date('d-m-Y H:i:s')}}
+						</td>
+						<td>
+							{{topic.comments|length}}
+
+						</td>
+						<td>
+							{% for comment in topic.comments %}
+								{% if loop.last %}
+									<b>posted on:</b> {{comment.createdOn | date('d-m-Y H:i:s')}}
+								{% endif %}
+							{% endfor %}
+						</td>
+						<td>
+							{# {% if app.user == topic.createdBy %} #}
+								<a href="/mou/forum/topic/edit/{{topic.id}}"><i class="fa fa-pencil"></i></a>
+								<a href="/mou/forum/topic/delete/{{topic.id}}"><i class="fa fa-remove"></i></a>
+							{# {% endif %} #}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+	<div class="col-lg-1"></div>
+</div>
+
+{% endblock %}

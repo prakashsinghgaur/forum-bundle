@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+	<div class="col-lg-12">		
+		<ol class="breadcrumb breadcrumb-custom"><b>You are here:</b>
+		  <li>Home</li>
+		  <li class="active">Discussion Forum</li>
+		</ol>
+		
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-4"><h3><b>Create new forum </b></h3></div>
+	<div class="col-lg-4">
+		<div>
+		
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<ul style="list-style-type:none;" class="pull-right">
+			<li style="display:inline" ><a href="/mou" class="btn btn-default"><i class="fa fa-backward" aria-hidden="true"></i> Home </a>
+			</li>
+			
+		<ul>
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="col-lg-3"></div>
+	<div class="col-lg-6">
+		{{form_start(form)}}
+		{{form_widget(form)}}
+		{{form_end(form)}}
+
+
+	</div>
+	<div class="col-lg-3"></div>
+</div>
+{% endblock %}
