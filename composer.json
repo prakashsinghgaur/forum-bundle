@@ -1,0 +1,22 @@
+{
+    "name": "prakashsinghgaur/forum-bundle",
+    "description": "A simple forum",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "prakashsingh",
+            "email": "prakashsingh@1601458.no-reply.drupal.org"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload":{
+        "psr-0":{"PrakashSinghGaur\\ForumBundle":""}
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+}
