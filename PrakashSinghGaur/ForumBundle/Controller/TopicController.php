@@ -9,6 +9,7 @@ use PrakashSinghGaur\ForumBundle\Entity\Forum;
 use PrakashSinghGaur\ForumBundle\Entity\Topic;
 use \DateTime;
 use Symfony\Component\BrowserKit\Response;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
 class TopicController extends Controller
 {
@@ -38,7 +39,7 @@ class TopicController extends Controller
         $forum = $this->getDoctrine()->getRepository('PrakashSinghGaurForumBundle:Forum')->find($id);
         $form = $this->createFormBuilder($topic)
             ->add('title')
-            ->add('description')
+            ->add('description', CKEditorType::class, array('config_name' => 'my_config'))
             ->add('save','submit')
             ->getForm();
                 
@@ -78,7 +79,7 @@ class TopicController extends Controller
 
         $form = $this->createFormBuilder($topic)
                 ->add('title')
-                ->add('description', 'ckeditor', array('config_name' => 'my_config', 'label'=>'Topic description'))
+                ->add('description', CKEditorType::class, array('config_name' => 'my_config'))
                 ->add('save','submit')
                 ->getForm();
 

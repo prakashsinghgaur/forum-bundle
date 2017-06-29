@@ -10,6 +10,7 @@ use PrakashSinghGaur\ForumBundle\Entity\Topic;
 use PrakashSinghGaur\ForumBundle\Entity\Comment;
 use \DateTime;
 use Symfony\Component\BrowserKit\Response;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
 class CommentController extends Controller
 {
@@ -24,7 +25,7 @@ class CommentController extends Controller
         $forum = $topic->getForum();
         $comment = new Comment();
         $form = $this->createFormBuilder($comment)
-                ->add('description')
+                ->add('description', CKEditorType::class, array('config_name' => 'my_config'))
                 ->add('save','submit')
                 ->getForm();
 
@@ -64,7 +65,7 @@ class CommentController extends Controller
         $comment->setDescription($comment->getDescription());
 
         $form = $this->createFormBuilder($comment)
-                ->add('description')
+                ->add('description', CKEditorType::class, array('config_name' => 'my_config'))
                 ->add('save','submit')
                 ->getForm();
 
