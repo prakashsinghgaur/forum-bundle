@@ -46,9 +46,10 @@ class TopicController extends Controller
 	     $form->handleRequest($request);
 	     if ($form->isSubmitted() && $form->isValid()) {
         	    $em = $this->getDoctrine()->getManager();
-                //$forum->setTitle()
                 $topic->setForum($forum);
+                $topic->setCreatedBy($this->get('security.token_storage')->getToken()->getUser());
                 $topic->setCreatedOn(new \DateTime('now'));
+
 			    $em->persist($topic);
     			$em->flush();
                 $this->addFlash(
@@ -72,6 +73,12 @@ class TopicController extends Controller
     public function editAction($id,Request $request){
 
         $topic = $this->getDoctrine()->getRepository('PrakashSinghGaurForumBundle:Topic')->find($id);
+        $activeUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        if(!$topic->getCreatedBy() == $activeUser){
+            throw $this->createAccessDeniedException('You are not author of this content');
+        }
+
         $forum = $topic->getForum();
 
         $topic->setTitle($topic->getTitle());
@@ -116,6 +123,12 @@ class TopicController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $topic = $em->getRepository('PrakashSinghGaurForumBundle:Topic')->find($id);
+
+        $activeUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        if(!$topic->getCreatedBy() == $activeUser){
+            throw $this->createAccessDeniedException('You are not author of this content');
+        }
 
         $forum = $topic->getForum();
 

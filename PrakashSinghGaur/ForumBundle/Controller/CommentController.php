@@ -33,6 +33,7 @@ class CommentController extends Controller
          if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $comment->setTopic($topic);
+                $comment->setCreatedBy($this->get('security.token_storage')->getToken()->getUser());
                 $comment->setCreatedOn(new \DateTime('now'));
                 $em->persist($comment);
                 $em->flush();
@@ -59,6 +60,11 @@ class CommentController extends Controller
     public function editAction($id,Request $request){
 
         $comment = $this->getDoctrine()->getRepository('PrakashSinghGaurForumBundle:Comment')->find($id);
+        $activeUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        if(!$comment->getCreatedBy() == $activeUser){
+            throw $this->createAccessDeniedException('You are not author of this content');
+        }
         $topic = $comment->getTopic();
         $forum = $topic->getForum();
 
@@ -95,35 +101,28 @@ class CommentController extends Controller
     }
 
     /**
-     * @Route("/forum/topic/delete/{id}", name="forumtopic_delete")
+     * @Route("/forum/comment/delete/{id}", name="forumcomment_delete")
      */
     public function deleteAction($id, Request $request){
 
 
         $em = $this->getDoctrine()->getManager();
-        $topic = $em->getRepository('PrakashSinghGaurForumBundle:Topic')->find($id);
+        $comment = $em->getRepository('PrakashSinghGaurForumBundle:Comment')->find($id);
+        $forum = $comment->getTopic()->getForum();
 
-        $forum = $topic->getForum();
+        $activeUser = $this->get('security.token_storage')->getToken()->getUser();
 
-        $em2 = $this->getDoctrine()->getManager();
-        $comment = $em2->getRepository('PrakashSinghGaurForumBundle:Comment')->findBy(array('topic' => $topic));
-
-        if($comment){
-            $this->addFlash(
-                'warning',
-                'Topic cannot be removed, as there are some comments in refernce.'
-                );
+        if(!$comment->getCreatedBy() == $activeUser){
+            throw $this->createAccessDeniedException('You are not author of this content');
         }
-        else{
 
-            $em->remove($topic);
+            $em->remove($comment);
             $em->flush();
 
             $this->addFlash(
                     'notice',
-                    'Topic Deleted'
+                    'Comment Deleted'
                     );
-        }
             return $this->redirectToRoute('forumtopic_list', array('id'=>$forum->getId()));
     }
 }

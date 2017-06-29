@@ -48,6 +48,14 @@ class Comment
      */
     private $createdOn;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Appbundle\Entity\User", inversedBy="topics")
+     * @ORM\JoinColumn(name="createdby", referencedColumnName="id")
+     */
+    private $createdBy;
+
+
+    
 
     /**
      * Get id
@@ -129,5 +137,29 @@ class Comment
     public function getTopic()
     {
         return $this->topic;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param \Appbundle\Entity\User $createdBy
+     *
+     * @return Comment
+     */
+    public function setCreatedBy(\Appbundle\Entity\User $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \Appbundle\Entity\User
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
     }
 }

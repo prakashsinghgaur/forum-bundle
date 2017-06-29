@@ -29,6 +29,19 @@ class Forum
     private $title;
 
     /**
+     * @var datetime
+     *
+     * @ORM\Column(name="createdOn", type="datetime")
+     */
+    private $createdOn;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="topics")
+     * @ORM\JoinColumn(name="createdby", referencedColumnName="id")
+     */
+    private $createdBy;
+
+    /**
      * @ORM\OneToMany(targetEntity="Topic", mappedBy="forum")
      */
     private $topics;
@@ -106,5 +119,53 @@ class Forum
     public function getTopics()
     {
         return $this->topics;
+    }
+
+    /**
+     * Set createdOn
+     *
+     * @param \DateTime $createdOn
+     *
+     * @return Forum
+     */
+    public function setCreatedOn($createdOn)
+    {
+        $this->createdOn = $createdOn;
+
+        return $this;
+    }
+
+    /**
+     * Get createdOn
+     *
+     * @return \DateTime
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param \AppBundle\Entity\User $createdBy
+     *
+     * @return Forum
+     */
+    public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
     }
 }

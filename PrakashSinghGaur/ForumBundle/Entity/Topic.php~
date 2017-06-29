@@ -57,6 +57,12 @@ class Topic
     private $createdOn;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="topics")
+     * @ORM\JoinColumn(name="createdby", referencedColumnName="id")
+     */
+    private $createdBy;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Forum", inversedBy="topics")
      * @ORM\JoinColumn(name="forum_id", referencedColumnName="id")
      */
@@ -73,6 +79,8 @@ class Topic
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+   
 
     /**
      * Get id
@@ -154,6 +162,30 @@ class Topic
     public function getCreatedOn()
     {
         return $this->createdOn;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param \AppBundle\Entity\User $createdBy
+     *
+     * @return Topic
+     */
+    public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
     }
 
     /**

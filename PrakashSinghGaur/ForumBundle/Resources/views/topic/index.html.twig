@@ -39,6 +39,7 @@
 				<tr class="bg-primary">
 					<th>#</th>
 					<th class="col-sm-4">Forum topic(s)</th>
+					<th class="col-sm-3">Created By <i class="fa fa-user"></i></th>
 					<th class="col-sm-2">Comments <i class="fa fa-comment"></i></th>
 					<th class="col-sm-3">Last comment</th>
 					<th></th>
@@ -49,7 +50,7 @@
 					<tr>
 						<td>{{loop.index}}</td>
 						<td><a href="/forum/topic/comment/{{topic.id}}"> {{topic.title}}</a></td>
-						<td>
+						<td>{{topic.createdBy.username}} <br/>
 							created on: {{topic.createdOn | date('d-m-Y H:i:s')}}
 						</td>
 						<td>
@@ -59,15 +60,16 @@
 						<td>
 							{% for comment in topic.comments %}
 								{% if loop.last %}
+									<b>posted by:</b> {{comment.createdBy.username}}<br/>
 									<b>posted on:</b> {{comment.createdOn | date('d-m-Y H:i:s')}}
 								{% endif %}
 							{% endfor %}
 						</td>
 						<td>
-							{# {% if app.user == topic.createdBy %} #}
-								<a href="/mou/forum/topic/edit/{{topic.id}}"><i class="fa fa-pencil"></i></a>
-								<a href="/mou/forum/topic/delete/{{topic.id}}"><i class="fa fa-remove"></i></a>
-							{# {% endif %} #}
+							{% if app.user == topic.createdBy %}
+								<a href="/forum/topic/edit/{{topic.id}}"><i class="fa fa-pencil"></i> Edit</a>
+								<a href="/forum/topic/delete/{{topic.id}}"><i class="fa fa-remove"></i> Delete</a>
+							{% endif %}
 						</td>
 					</tr>
 				{% endfor %}

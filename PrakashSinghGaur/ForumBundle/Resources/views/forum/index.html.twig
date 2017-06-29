@@ -38,6 +38,10 @@
 					<th class="col-sm-6">Forum</th>
 					<th class="col-sm-2">Topics <i class="fa fa-tasks"></i></th>
 					<th class="col-sm-2">Comments <i class="fa fa-comment"></i></th>
+					<th class="col-sm-1"></th>
+					<th class="col-sm-1"></th>
+
+
 				</tr>
 			</thead>
 			<tbody>
@@ -52,6 +56,15 @@
 								{% set countTopic = countTopic + topic.comments | length %}
 							{% endfor %}
 							{{countTopic}}
+						</td>
+						<td>Created By: {{forum.createdBy.username}}<br/>
+							Created On: {{forum.createdOn|date('d-m-Y H:i:s')}}
+						</td>
+						<td>
+							{% if app.user == forum.createdBy %}
+								<a href="/forum/edit/{{forum.id}}"><i class="fa fa-pencil"></i> Edit</a>
+								<a href="/forum/delete/{{forum.id}}"><i class="fa fa-remove"></i> Delete</a>
+							{% endif %}
 						</td>
 
 					</tr>

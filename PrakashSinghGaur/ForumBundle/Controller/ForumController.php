@@ -38,7 +38,8 @@ class ForumController extends Controller
 	     $form->handleRequest($request);
 	     if ($form->isSubmitted() && $form->isValid()) {
         	    $em = $this->getDoctrine()->getManager();
-                //$forum->setTitle()
+                $forum->setCreatedBy($this->get('security.token_storage')->getToken()->getUser());
+                $forum->setCreatedOn(new \DateTime('now'));
 			    $em->persist($forum);
     			$em->flush();
                 $this->addFlash(
@@ -61,6 +62,12 @@ class ForumController extends Controller
     public function editAction($id,Request $request){
 
         $forum = $this->getDoctrine()->getRepository('PrakashSinghGaurForumBundle:Forum')->find($id);
+
+        $activeUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        if(!$forum->getCreatedBy() == $activeUser){
+            throw $this->createAccessDeniedException('You are not owner of this forum');
+        }
 
         $forum->setTitle($forum->getTitle());
 
@@ -100,6 +107,12 @@ class ForumController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $forum = $em->getRepository('PrakashSinghGaurForumBundle:Forum')->find($id);
+
+        $activeUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        if(!$forum->getCreatedBy() == $activeUser){
+            throw $this->createAccessDeniedException('You are not owner of this forum');
+        }
 
         $em2 = $this->getDoctrine()->getManager();
         $topic = $em2->getRepository('PrakashSinghGaurForumBundle:Topic')->findBy(array('forum' => $forum));

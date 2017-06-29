@@ -29,6 +29,19 @@ class Forum
     private $title;
 
     /**
+     * @var datetime
+     *
+     * @ORM\Column(name="createdOn", type="datetime")
+     */
+    private $createdOn;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="topics")
+     * @ORM\JoinColumn(name="createdby", referencedColumnName="id")
+     */
+    private $createdBy;
+
+    /**
      * @ORM\OneToMany(targetEntity="Topic", mappedBy="forum")
      */
     private $topics;

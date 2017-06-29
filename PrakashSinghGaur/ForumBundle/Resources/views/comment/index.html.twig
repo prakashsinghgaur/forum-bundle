@@ -35,7 +35,7 @@
 		 	<div class="panel-heading"><h4>Topic: {{topic.title}}</h4></div>
 			 	<div class="panel-body">
 			 		<p>Descirption: {{topic.description | raw}}</p>
-					<p><i> created on: {{topic.createdOn | date('d-m-Y H:i:s')}}</i></p>
+					<p><i>created by: {{topic.createdBy.username}} <br/> created on: {{topic.createdOn | date('d-m-Y H:i:s')}}</i></p>
 					
 					<p class="text-primary">Comments: {{topic.comments | length}}  </p>
 						{% for comment in comments %}
@@ -44,10 +44,11 @@
 								<div class="panel panel-body" >
 									
 									<p>{{comment.description | raw }}</p>
-									<p class="pull-right">posted on: {{comment.createdOn | date('d-m-Y H:i:s')}}</i><br/>
-										{# {% if app.user == comment.createdBy %} #}
+									<p class="pull-right">posted by: {{comment.createdBy.username}} <br/>posted on: {{comment.createdOn | date('d-m-Y H:i:s')}}</i><br/>
+										{% if app.user == comment.createdBy %}
 											<a href="/forum/topic/comment/edit/{{comment.id}}">Edit comment<i class="fa fa-pencil"></i></a>
-										{# {% endif %} #}
+											<a href="/forum/comment/delete/{{comment.id}}">Delete comment<i class="fa fa-remove"></i></a>
+										{% endif %}
 									</p>
 								</div>
 							</div>
